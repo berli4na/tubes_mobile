@@ -14,7 +14,7 @@ class ProgramTigaScreen extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
-                  // Action untuk kembali ke home/beranda
+                  //Navigator.pushNamed(context, '/beranda');
                 },
               ),
             ),
@@ -111,7 +111,7 @@ class ProgramTigaScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Aksi ketika tombol selesai ditekan
+                     Navigator.pushNamed(context, '/persiapan_skincare');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:Color.fromARGB(255, 143, 78, 155),
