@@ -10,7 +10,7 @@ class DetailProgramTigaScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            // Aksi ketika tombol kembali ditekan
+            Navigator.pushNamed(context, '/persiapan_skincare');
           },
         ),
         backgroundColor: Colors.purple[100],
@@ -78,7 +78,7 @@ class DetailProgramTigaScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               onPressed: () {
-                // Aksi ketika tombol selesai ditekan
+                Navigator.pushNamed(context, '/program_selesai');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:  Color.fromARGB(255, 143, 78, 155), // Mengubah warna latar belakang menjadi putih

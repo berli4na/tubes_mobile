@@ -5,10 +5,14 @@ class SkincareScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/program_tiga');
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
         backgroundColor: Colors.purple[100],
       ),
       backgroundColor: Colors.purple[100],
@@ -39,10 +43,12 @@ class SkincareScreen extends StatelessWidget {
               ),
               SizedBox(height: 40),
               Text(
-                      'Siapkan kulitmu untuk yoga wajah',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 143, 78, 155)),
-                    ),
+                'Siapkan kulitmu untuk yoga wajah',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 143, 78, 155)),
+              ),
               SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.all(16),
@@ -59,7 +65,8 @@ class SkincareScreen extends StatelessWidget {
                       children: [
                         _buildPreparationStep(
                             'images/cucimuka.png', 'Bersihkan wajahmu'),
-                        _buildPreparationStep('images/pakaicream.png', 'Oleskan toner'),
+                        _buildPreparationStep(
+                            'images/pakaicream.png', 'Oleskan toner'),
                       ],
                     ),
                   ],
@@ -67,11 +74,15 @@ class SkincareScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                      'Gunakan produk minyak pijat',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 143, 78, 155)),
-                    ),
-              SizedBox(height: 20,),
+                'Gunakan produk minyak pijat',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 143, 78, 155)),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -85,36 +96,38 @@ class SkincareScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _buildPreparationStep(
-                            'images/cucimuka.png', 'Oleskan cream atau minyak pijat'),
+                        _buildPreparationStep('images/cucimuka.png',
+                            'Oleskan cream atau minyak pijat'),
                       ],
                     ),
                   ],
                 ),
               ),
               SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol selesai ditekan
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 143, 78, 155),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular( 30.0),
-                      ),
-                      minimumSize: Size(double.infinity, 50), // Memastikan tombol selebar layar
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/detail_program_tiga');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 143, 78, 155),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: Text(
-                      "Mulai",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
+                    minimumSize: Size(
+                        double.infinity, 50), // Memastikan tombol selebar layar
+                  ),
+                  child: Text(
+                    "Mulai",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
                     ),
                   ),
                 ),
+              ),
             ],
           ),
         ),
@@ -129,7 +142,8 @@ class SkincareScreen extends StatelessWidget {
             width: 50, height: 50), // Adjust as per your icon size
         SizedBox(width: 10.0),
         Text(label,
-            textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -140,7 +154,11 @@ class SkincareScreen extends StatelessWidget {
         Image.asset(imagePath,
             width: 80, height: 80), // Adjust size accordingly
         SizedBox(height: 10),
-        Text(label, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ],
     );
   }
