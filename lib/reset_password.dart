@@ -147,31 +147,34 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
-  Future<void> _handleSubmit() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      setState(() => _isLoading = true);
-      
-      try {
-        // Simulate API call
-        await Future.delayed(const Duration(seconds: 2));
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Email reset password telah dikirim'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Terjadi kesalahan, silakan coba lagi'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      } finally {
-        setState(() => _isLoading = false);
-      }
+ Future<void> _handleSubmit() async {
+  if (_formKey.currentState!.validate()) {
+    _formKey.currentState!.save();
+    setState(() => _isLoading = true);
+
+    try {
+      // Simulate API call
+      await Future.delayed(const Duration(seconds: 2));
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Email reset password telah dikirim'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      // Navigate to confirm_reset_password page
+      Navigator.pushNamed(context, '/reset_password_confirm');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan, silakan coba lagi'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
+}
 }

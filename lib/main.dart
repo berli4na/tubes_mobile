@@ -10,9 +10,10 @@ import 'package:ui/prep_skincare.dart';
 import 'package:ui/profile_page.dart';
 import 'package:ui/reset_password.dart';
 import 'package:ui/reset_password_confirm.dart';
-
-
-
+import 'package:ui/sign_up.dart';
+import 'package:ui/edit_profile.dart';
+import 'package:ui/splash_screen.dart';
+import 'package:ui/get_started.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,14 +26,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Litzy',
-       theme: ThemeData(
+      theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(
-          ThemeData.light()
-              .textTheme, 
+          ThemeData.light().textTheme,
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/profile_page',
+      initialRoute: '/reset_password',
       routes: {
         '/program_tiga': (context) => ProgramTigaScreen(),
         '/detail_program_tiga': (context) => DetailProgramTigaScreen(),
@@ -44,6 +44,10 @@ class MyApp extends StatelessWidget {
         '/profile_page': (context) => ProfilePage(),
         '/reset_password': (context) => ResetPasswordPage(),
         '/reset_password_confirm': (context) => ResetPasswordScreen(),
+        '/sign_up': (context) => MendaftarPage(),
+        '/edit_profile': (context) => EditProfilPage(),
+        '/splash_screen': (context) => TampilanAwalScreen(),
+        '/get_started': (context) => MemulaiScreen(),
       },
     );
   }
