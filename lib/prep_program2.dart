@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProgramTigaScreen extends StatelessWidget {
+class ProgramDuaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,14 +29,14 @@ class ProgramTigaScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: AssetImage('images/model3.png'), // Path ke gambar
+                      image: AssetImage('images/model2.png'), // Path ke gambar
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Yoga Wajah: Mempertegas rahang',
+                  'Yoga Wajah: Menghilangkan ',
                   style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.bold,
@@ -44,11 +44,20 @@ class ProgramTigaScreen extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center, // Menjaga teks berada di tengah
                 ),
+                SizedBox(height: 3),
+                Text(
+                  'Garis Senyum',
+                  style: TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 143, 78, 155),
+                  ),
+                ),
                 SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Text(
-                    'Teknik ini membantu kamu dapetin rahang impian tanpa filler atau operasi! Gerakan ini efektif mengencangkan otot di area rahang dan leher, bikin wajah terlihat lebih terdefinisi.',
+                    'Yoga ini membantu menghilangkan garis senyum, mengencangkan kulit, merangsang kolagen, dan menyamarkan kerutan halus.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -60,7 +69,7 @@ class ProgramTigaScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Text(
-                    'Rasakan perubahan rahang yang makin tajam dan garis wajah makin keren!',
+                    'Dapatkan kepercayaan dirimu dengan senyum yang tetap menawan tanpa garis yang mengganggu!.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -83,7 +92,7 @@ class ProgramTigaScreen extends StatelessWidget {
                       Icon(Icons.timer, color: Colors.white),
                       SizedBox(width: 5),
                       Text(
-                        '7 menit per sesi',
+                        '8 menit per sesi',
                         style: TextStyle(color: Colors.white),
                       ),
                     ],
@@ -101,11 +110,11 @@ class ProgramTigaScreen extends StatelessWidget {
                           children: [
                             BenefitItem(
                                 text:
-                                    'Membentuk garis rahang yang lebih tegas'),
+                                    'Merangsang produksi kolagen dan elastin'),
                             BenefitItem(
                                 text:
-                                    'Mengurangi lemak berlebih di sekitar dagu dan pipi, membuat wajah terlihat lebih tirus'),
-                            BenefitItem(text: 'Mengurangi double chin'),
+                                    'Mengurangi kerutan di daerah sekitar mulut'),
+                            BenefitItem(text: 'Mengencangkan otot-otot wajah '),
                           ],
                         ),
                       ),
@@ -118,7 +127,7 @@ class ProgramTigaScreen extends StatelessWidget {
                       horizontal: 16.0, vertical: 8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/persiapan_skincare');
+                      Navigator.pushNamed(context, '/persiapan_skincare2');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 143, 78, 155),

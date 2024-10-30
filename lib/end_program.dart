@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui/homepage.dart';
 
 class ProgramBerakhirScreen extends StatelessWidget {
   const ProgramBerakhirScreen({super.key});
@@ -9,12 +10,12 @@ class ProgramBerakhirScreen extends StatelessWidget {
       backgroundColor: Colors.purple[100],
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0), // Tambahkan padding di semua sisi
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Selamat !',
+                'Selamat!',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -43,7 +44,7 @@ class ProgramBerakhirScreen extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(150),
                   child: Image.asset(
-                    'images/girlcartoon.png', // Ganti dengan nama file gambar Anda
+                    'images/girlcartoon.png',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -62,14 +63,18 @@ telah latihan bersama kami!''',
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  // Aksi ketika tombol selesai ditekan
+                  // Navigasi ke halaman Home ketika tombol Selesai ditekan
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProgramHomepage()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromARGB(255, 143, 78, 155),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular( 30.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                  minimumSize: Size(double.infinity, 50), // Memastikan tombol selebar layar
+                  minimumSize: Size(double.infinity, 50),
                 ),
                 child: Text(
                   "Selesai",
