@@ -63,7 +63,8 @@ flutter:
   assets:
     - assets/images/model3.png
     - assets/images/Check.png
-  #   - images/a_dot_ham.jpeg
+    - assets/images/model1.jpeg
+    - assets/images/model2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
