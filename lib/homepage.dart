@@ -82,25 +82,30 @@ class ProgramHomepage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          onTap: (index) {
-            if (index == 1) {
-              // Navigasi ke halaman profil ketika ikon Profile ditekan
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
-              );
-            }
-          }),
+        backgroundColor: Color.fromARGB(
+            123, 178, 88, 214), // Background color sesuai permintaan
+        selectedItemColor: Colors.white, // Warna icon yang dipilih
+        unselectedItemColor: Colors.purple[100], 
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 1) {
+            // Navigasi ke halaman profil ketika ikon Profile ditekan
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfilePage()),
+            );
+          }
+        },
+      ),
     );
   }
 }

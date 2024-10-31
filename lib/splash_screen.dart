@@ -9,8 +9,18 @@ class TampilanAwalScreen extends StatefulWidget {
 }
 
 class _TampilanAwalScreenState extends State<TampilanAwalScreen> {
+  
+  @override
+  void initState() {
+    super.initState();
+    // Navigate to GetStarted after 5 seconds
+    Future.delayed(const Duration(seconds: 5), () {
+      _navigateToGetStarted();
+    });
+  }
+
   void _navigateToGetStarted() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => MemulaiScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
