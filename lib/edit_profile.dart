@@ -8,6 +8,7 @@ class EditProfilPage extends StatefulWidget {
 }
 
 class _EditProfilPageState extends State<EditProfilPage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
@@ -35,6 +36,13 @@ class _EditProfilPageState extends State<EditProfilPage> {
     );
   }
 
+  void _onSave() {
+    if (_formKey.currentState!.validate()) {
+      _showSuccessMessage();
+      Navigator.pushNamed(context, '/profile_page');
+    }
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -48,72 +56,123 @@ class _EditProfilPageState extends State<EditProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDAB6FC), // Light purple color
+      backgroundColor: const Color(0xFFDAB6FC),
       appBar: AppBar(
         backgroundColor: const Color(0xFFDAB6FC),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, '/profile_page');
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                'Ubah Profil',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            _buildLabeledTextField(label: 'Nama Pengguna', controller: _nameController),
-            const SizedBox(height: 12),
-            _buildLabeledTextField(label: 'Email', controller: _emailController),
-            const SizedBox(height: 12),
-            _buildLabeledTextField(label: 'Jenis Kelamin', controller: _genderController),
-            const SizedBox(height: 12),
-            _buildLabeledDateField(label: 'Tanggal Lahir', controller: _birthDateController),
-            const SizedBox(height: 12),
-            _buildLabeledTextField(label: 'Jenis Kulit', controller: _skinTypeController),
-            const SizedBox(height: 24),
-            Center(
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple[100],
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    'Ubah Profil',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
-                  onPressed: () {
-                    // Handle save action
-                    _showSuccessMessage();
+                ),
+                const SizedBox(height: 24),
+                _buildLabeledTextField(
+                  label: 'Nama Pengguna',
+                  controller: _nameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Nama Pengguna tidak boleh kosong';
+                    }
+                    return null;
                   },
-                  child: const Text(
-                    'Simpan',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                const SizedBox(height: 12),
+                _buildLabeledTextField(
+                  label: 'Email',
+                  controller: _emailController,
+                  validator: (value) {
+                    if (value == null || !value.contains('@')) {
+                      return 'Masukkan email yang valid';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 12),
+                _buildLabeledTextField(
+                  label: 'Jenis Kelamin',
+                  controller: _genderController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Jenis Kelamin tidak boleh kosong';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 12),
+                _buildLabeledDateField(
+                  label: 'Tanggal Lahir',
+                  controller: _birthDateController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Tanggal Lahir tidak boleh kosong';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 12),
+                _buildLabeledTextField(
+                  label: 'Jenis Kulit',
+                  controller: _skinTypeController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Jenis Kulit tidak boleh kosong';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 24),
+                Center(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purple[400],
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      onPressed: _onSave,
+                      child: const Text(
+                        'Simpan',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildLabeledTextField({required String label, required TextEditingController controller}) {
+  Widget _buildLabeledTextField({
+    required String label,
+    required TextEditingController controller,
+    String? Function(String?)? validator,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,11 +181,12 @@ class _EditProfilPageState extends State<EditProfilPage> {
           style: const TextStyle(fontSize: 16, color: Colors.white),
         ),
         const SizedBox(height: 4),
-        TextField(
+        TextFormField(
           controller: controller,
+          validator: validator,
           decoration: InputDecoration(
             filled: true,
-            fillColor: const Color.fromARGB(255, 233, 234, 235), // Changed fill color
+            fillColor: const Color.fromARGB(255, 233, 234, 235),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
               borderSide: BorderSide.none,
@@ -137,7 +197,11 @@ class _EditProfilPageState extends State<EditProfilPage> {
     );
   }
 
-  Widget _buildLabeledDateField({required String label, required TextEditingController controller}) {
+  Widget _buildLabeledDateField({
+    required String label,
+    required TextEditingController controller,
+    String? Function(String?)? validator,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -146,13 +210,14 @@ class _EditProfilPageState extends State<EditProfilPage> {
           style: const TextStyle(fontSize: 16, color: Colors.white),
         ),
         const SizedBox(height: 4),
-        TextField(
+        TextFormField(
           controller: controller,
           readOnly: true,
           onTap: () => _selectDate(context),
+          validator: validator,
           decoration: InputDecoration(
             filled: true,
-            fillColor: const Color.fromARGB(255, 233, 234, 235), // Changed fill color
+            fillColor: const Color.fromARGB(255, 233, 234, 235),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
               borderSide: BorderSide.none,

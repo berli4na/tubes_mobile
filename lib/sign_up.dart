@@ -133,62 +133,81 @@ class _MendaftarPageState extends State<MendaftarPage> {
   }
 
   // Modifikasi bagian _buildRegisterButton
-Widget _buildRegisterButton() {
-  return SizedBox(
-    width: double.infinity,
-    height: 50,
-    child: ElevatedButton(
-      onPressed: _isLoading
-          ? null
-          : () {
-              if (_formKey.currentState!.validate()) {
-                setState(() {
-                  _isLoading = true;
-                });
+  Widget _buildRegisterButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: _isLoading
+            ? null
+            : () {
+                if (_formKey.currentState!.validate()) {
+                  if (!_emailController.text.contains('@')) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Email harus mengandung "@"'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+                  if (_passwordController.text != _confirmPasswordController.text) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Kata sandi tidak sama'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text('Akun berhasil terdaftar'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-
-                Future.delayed(const Duration(seconds: 2), () {
                   setState(() {
-                    _isLoading = false;
+                    _isLoading = true;
                   });
-                  // Navigasi ke halaman /login setelah selesai
-                  Navigator.pushReplacementNamed(context, '/login');
-                });
-              }
-            },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 143, 78, 155),
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Akun berhasil terdaftar'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+
+                  Future.delayed(const Duration(seconds: 2), () {
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    // Navigasi ke halaman /login setelah selesai
+                    Navigator.pushReplacementNamed(context, '/login');
+                  });
+                }
+              },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 143, 78, 155),
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          elevation: 2,
         ),
-        elevation: 2,
+        child: _isLoading
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
+              )
+            : const Text(
+                "Daftar",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
       ),
-      child: _isLoading
-          ? const SizedBox(
-              height: 20,
-              width: 20,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 2,
-              ),
-            )
-          : const Text(
-              "Daftar",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-    ),
-  );
-}
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

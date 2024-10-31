@@ -62,8 +62,7 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Colors.green,
           ),
         );
-        // Navigate to home screen
-        // Navigator.pushNamed(context, '/beranda');
+        Navigator.pushNamed(context, '/homepage');
       }
     } catch (e) {
       if (mounted) {
@@ -198,7 +197,9 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: (){
+              Navigator.pushNamed(context, '/get_started');
+            },
             icon: const Icon(Icons.arrow_back, color: Colors.white),
           ),
         ),

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/homepage',
+      initialRoute: '/splash_screen',
       routes: {
         '/homepage': (context) => ProgramHomepage(),
         '/program_dua': (context) => ProgramDuaScreen(),
