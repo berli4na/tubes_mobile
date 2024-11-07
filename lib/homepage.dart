@@ -5,7 +5,7 @@ class ProgramHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD1A3FF),
+       backgroundColor: const Color.fromARGB(255, 225, 190, 231),
       body: Column(
         children: [
           // App Bar Container with Logo
@@ -16,7 +16,7 @@ class ProgramHomepage extends StatelessWidget {
                 bottomRight: Radius.circular(30),
                 bottomLeft: Radius.circular(30),
               ),
-              color: Color.fromARGB(123, 178, 88, 214),
+              color: Color.fromARGB(255, 143, 78, 155),
             ),
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
@@ -42,7 +42,7 @@ class ProgramHomepage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFFB258D6),
+                  color: Color.fromARGB(255, 143, 78, 155),
                 ),
               ),
             ),
@@ -82,8 +82,7 @@ class ProgramHomepage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromARGB(
-            123, 178, 88, 214), // Background color sesuai permintaan
+        backgroundColor: Color.fromARGB(255, 143, 78, 155), // Background color sesuai permintaan
         selectedItemColor: Colors.white, // Warna icon yang dipilih
         unselectedItemColor: Colors.purple[100], 
         items: const <BottomNavigationBarItem>[
@@ -128,8 +127,8 @@ class YogaProgramCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFFB258D6), // Darker purple color
-            Color(0xFFD1A3FF), // Lighter purple color
+             Color.fromARGB(255, 143, 78, 155), // Darker purple color
+           Color.fromARGB(255, 225, 190, 231), // Lighter purple color
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -164,7 +163,7 @@ class YogaProgramCard extends StatelessWidget {
                   ElevatedButton(
                     onPressed: onPressed,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple[400],
+                      backgroundColor: Color.fromARGB(255, 143, 78, 155),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

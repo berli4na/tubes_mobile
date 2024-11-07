@@ -78,9 +78,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondaryColor,
+      backgroundColor: Colors.purple[100],
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: Color.fromARGB(255, 143, 78, 155),
         title: const Text(
           'Profil Pengguna',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
@@ -102,17 +102,17 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 20),
               ProfileButton(
                 text: 'Ubah Profil',
-                color: primaryColor,
+                color: Color.fromARGB(255, 143, 78, 155),
                 onPressed: () => Navigator.pushNamed(context, '/edit_profile'),
               ),
               ProfileButton(
                 text: 'Keluar',
-                color: primaryColor,
+                color: Color.fromARGB(255, 143, 78, 155),
                 onPressed: _showLogoutConfirmationDialog,
               ),
               ProfileButton(
                 text: 'Hapus Akun',
-                color: primaryColor,
+                color: Color.fromARGB(255, 143, 78, 155),
                 onPressed: _showDeleteConfirmationDialog,
               ),
             ],
@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: primaryColor.withOpacity(0.5),
+        backgroundColor: Color.fromARGB(255, 143, 78, 155),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.purple[100],
  currentIndex: _selectedIndex,
