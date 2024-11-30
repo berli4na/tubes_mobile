@@ -2,25 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:ui/login.dart';
 import 'package:ui/homepage.dart';
 
-// Define color constants to match ProgramHomepage
-const Color primaryColor = Color(0xFFB258D6); // Darker purple color from ProgramHomepage
-const Color secondaryColor = Color(0xFFD1A3FF); // Lighter purple color from ProgramHomepage
-const Color snackbarSuccessColor = Colors.green;
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final TextEditingController usernameController = TextEditingController(text: "user01");
-  final TextEditingController emailController = TextEditingController(text: "email@contoh.com");
-  final TextEditingController genderController = TextEditingController(text: "Perempuan");
-  final TextEditingController birthDateController = TextEditingController(text: "01/01/2000");
-  final TextEditingController skinTypeController = TextEditingController(text: "Kulit Normal");
+  final TextEditingController usernameController =
+      TextEditingController(text: "admin");
+  final TextEditingController emailController =
+      TextEditingController(text: "admin@gmail.com");
+  final TextEditingController genderController =
+      TextEditingController(text: "Perempuan");
+  final TextEditingController birthDateController =
+      TextEditingController(text: "01/01/2000");
+  final TextEditingController skinTypeController =
+      TextEditingController(text: "Kulit Normal");
+
   int _selectedIndex = 1; // Default to Profile page
 
-  void _showConfirmationDialog(String title, String content, VoidCallback onConfirm) {
+  void _navigateToEditProfile() async {
+    final result = await Navigator.pushNamed(context, '/edit_profile');
+    if (result != null && result is Map<String, String>) {
+      setState(() {
+        usernameController.text = result['name'] ?? usernameController.text;
+        emailController.text = result['email'] ?? emailController.text;
+        genderController.text = result['gender'] ?? genderController.text;
+        birthDateController.text =
+            result['birthDate'] ?? birthDateController.text;
+        skinTypeController.text = result['skinType'] ?? skinTypeController.text;
+      });
+    }
+  }
+
+  void _showConfirmationDialog(
+      String title, String content, VoidCallback onConfirm) {
     showDialog(
       context: context,
       builder: (context) {
@@ -29,12 +45,15 @@ class _ProfilePageState extends State<ProfilePage> {
           content: Text(content, textAlign: TextAlign.justify),
           actions: [
             TextButton(
-              style: TextButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.black),
+              style: TextButton.styleFrom(
+                  backgroundColor: Colors.white, foregroundColor: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
               child: const Text('Batal'),
             ),
             TextButton(
-              style: TextButton.styleFrom(backgroundColor: primaryColor, foregroundColor: Colors.white),
+              style: TextButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 143, 78, 155),
+                  foregroundColor: Colors.white),
               onPressed: () {
                 Navigator.of(context).pop();
                 onConfirm();
@@ -52,10 +71,11 @@ class _ProfilePageState extends State<ProfilePage> {
       'Pengingat Keamanan',
       'Setelah menghapus akun, semua data akan dihapus dan tidak dapat dipulihkan.',
       () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginPage()));
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Akun berhasil dihapus!'),
-          backgroundColor: snackbarSuccessColor,
+          backgroundColor: Colors.green,
         ));
       },
     );
@@ -66,10 +86,11 @@ class _ProfilePageState extends State<ProfilePage> {
       'Pengingat Keamanan',
       'Apakah anda yakin ingin keluar?',
       () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginPage()));
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Log out berhasil'),
-          backgroundColor: snackbarSuccessColor,
+          backgroundColor: Colors.green,
         ));
       },
     );
@@ -78,52 +99,113 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple[100],
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 143, 78, 155),
-        title: const Text(
-          'Profil Pengguna',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
-        ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileField(title: 'Nama Pengguna', controller: usernameController),
-              ProfileField(title: 'Email', controller: emailController),
-              ProfileField(title: 'Jenis Kelamin', controller: genderController),
-              ProfileField(title: 'Tanggal Lahir', controller: birthDateController),
-              ProfileField(title: 'Jenis Kulit', controller: skinTypeController),
-              const SizedBox(height: 20),
-              ProfileButton(
-                text: 'Ubah Profil',
-                color: Color.fromARGB(255, 143, 78, 155),
-                onPressed: () => Navigator.pushNamed(context, '/edit_profile'),
-              ),
-              ProfileButton(
-                text: 'Keluar',
-                color: Color.fromARGB(255, 143, 78, 155),
-                onPressed: _showLogoutConfirmationDialog,
-              ),
-              ProfileButton(
-                text: 'Hapus Akun',
-                color: Color.fromARGB(255, 143, 78, 155),
-                onPressed: _showDeleteConfirmationDialog,
-              ),
-            ],
+          backgroundColor: Color.fromARGB(255, 143, 78, 155),
+          centerTitle: true, // Untuk menempatkan teks di tengah
+          automaticallyImplyLeading: false, // Menghilangkan ikon back arrow
+          title: const Text(
+            'Profil Pengguna',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+              color: Colors.white, // Mengatur warna teks menjadi putih
+            ),
           ),
+        ),
+
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 50),
+            ListTile(
+              leading: Icon(Icons.person, color: Colors.purple[700]),
+              title: Text('Nama Pengguna'),
+              subtitle: Text(usernameController.text),
+            ),
+            ListTile(
+              leading: Icon(Icons.email, color: Colors.purple[700]),
+              title: Text('Email'),
+              subtitle: Text(emailController.text),
+            ),
+            ListTile(
+              leading: Icon(Icons.person, color: Colors.purple[700]),
+              title: Text('Jenis Kelamin'),
+              subtitle: Text(genderController.text),
+            ),
+            ListTile(
+              leading: Icon(Icons.cake, color: Colors.purple[700]),
+              title: Text('Tanggal Lahir'),
+              subtitle: Text(birthDateController.text),
+            ),
+            ListTile(
+              leading: Icon(Icons.spa, color: Colors.purple[700]),
+              title: Text('Jenis Kulit'),
+              subtitle: Text(skinTypeController.text),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple[400],
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                onPressed: _navigateToEditProfile,
+                child: const Text(
+                  'Edit Profil',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple[400],
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                onPressed: _showLogoutConfirmationDialog,
+                child: const Text(
+                  'Keluar',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple[400],
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                onPressed: _showDeleteConfirmationDialog,
+                child: const Text(
+                  'Hapus Akun',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color.fromARGB(255, 143, 78, 155),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.purple[100],
- currentIndex: _selectedIndex,
+        currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
@@ -136,63 +218,15 @@ class _ProfilePageState extends State<ProfilePage> {
           }
         },
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
-    );
-  }
-}
-
-class ProfileField extends StatelessWidget {
-  final String title;
-  final TextEditingController controller;
-
-  ProfileField({required this.title, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-          TextFormField(
-            controller: controller,
-            readOnly: true,
-            style: const TextStyle(color: Colors.white70),
-            decoration: InputDecoration(
-              enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
-              focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-              hintText: 'Masukkan $title',
-              hintStyle: const TextStyle(color: Colors.white54),
-            ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ProfileButton extends StatelessWidget {
-  final String text;
-  final Color color;
-  final VoidCallback? onPressed;
-
-  ProfileButton({required this.text, required this.color, this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(backgroundColor: color),
-          onPressed: onPressed ?? () {},
-          child: Text(text, style: const TextStyle(color: Colors.white)),
-        ),
       ),
     );
   }

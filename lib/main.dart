@@ -19,7 +19,7 @@ import 'package:ui/sign_up.dart';
 import 'package:ui/edit_profile.dart';
 import 'package:ui/splash_screen.dart';
 import 'package:ui/get_started.dart';
-
+import 'package:ui/waktu.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash_screen',
+      initialRoute: '/waktu',
       routes: {
         '/homepage': (context) => ProgramHomepage(),
         '/program_dua': (context) => ProgramDuaScreen(),
@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/edit_profile': (context) => EditProfilPage(),
         '/splash_screen': (context) => TampilanAwalScreen(),
         '/get_started': (context) => MemulaiScreen(),
+        '/waktu':(context) => YogaFaceScreen(),
       },
     );
   }
