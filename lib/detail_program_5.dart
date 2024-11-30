@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DetailProgramDuaScreen extends StatelessWidget {
+class DetailProgram5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +10,7 @@ class DetailProgramDuaScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushNamed(context, '/persiapan_skincare');
+            Navigator.pushNamed(context, '/homepage');
           },
         ),
         backgroundColor: Colors.purple[100],
@@ -21,7 +21,7 @@ class DetailProgramDuaScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'Yoga Wajah: Menghilangkan Garis Senyum',
+              'Yoga Wajah: Pengangkatan Wajah',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -52,43 +52,19 @@ class DetailProgramDuaScreen extends StatelessWidget {
                 children: [
                   ExerciseStep(
                     stepNumber: 1,
-                    stepText: "Tarik kedua sudut bibir dengan jari tengah.",
+                    stepText: "Bersihkan wajah dan aplikasikan pelembap atau minyak wajah untuk memudahkan pijatan.",
                   ),
                   ExerciseStep(
                     stepNumber: 2,
-                    stepText: "Kencangkan kulit diarea dalam, lalu tahan selama 10 detik.",
+                    stepText: "Gunakan kedua telapak tangan untuk memulai pijatan dari dagu ke arah garis rahang. Lakukan gerakan ke atas dengan sedikit tekanan menggunakan pangkal telapak tangan. Ulangi sebanyak 10 kali. ",
                   ),
                   ExerciseStep(
                     stepNumber: 3,
-                    stepText: "Ulangi langkah tersebut sebanyak 25 kali.",
+                    stepText: "Setelah itu, gunakan ujung jari Anda untuk memijat bagian bawah tulang pipi. Mulailah dari sisi hidung, geser jari ke arah telinga sambil memberikan tekanan lembut. Ulangi gerakan ini sebanyak 10 kali di setiap sisi wajah.",
                   ),
                   ExerciseStep(
                     stepNumber: 4,
-                    stepText: "Selanjutnya tarik nafas dalam-dalam melalui mulut.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 5,
-                    stepText: "Tahan dalam posisi mulut menggembung.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 6,
-                    stepText: "Selagi menahan nafas, pindahkan udara dalam mulut dari satu sisi ke sisi lain.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 7,
-                    stepText: "Hembuskan nafas dan ulangi langkah tersebut sebanyak 10 kali.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 8,
-                    stepText: "Selanjutnya letakkan kedua telapak tangan di pipi dan pastikan jari-jari tangangn menyentuh tepian wajah.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 9,
-                    stepText: "Tarik kedua sudut bibir sampai gigi kelihatan dan tahan selama 30 detik.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 10,
-                    stepText: "Lepaskan dan ulangi kembali proses yang sama sebanyak tiga kali.",
+                    stepText: "Akhiri dengan gerakan mengangkat dari sisi leher ke arah dagu untuk membantu melancarkan aliran limfatik.",
                   ),
                 ],
               ),
@@ -98,7 +74,7 @@ class DetailProgramDuaScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/program_selesai');// Aksi ketika tombol selesai ditekan
+                Navigator.pushNamed(context, '/program_selesai');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:  Color.fromARGB(255, 143, 78, 155), // Mengubah warna latar belakang menjadi putih

@@ -112,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
-
+   backgroundColor: const Color.fromARGB(255, 225, 190, 231),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 30),
         child: Column(

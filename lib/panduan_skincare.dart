@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SkincareScreen1 extends StatelessWidget {
+class PanduanSkincare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/program_satu');
+              Navigator.pushNamed(context, '/homepage');
             },
             icon: Icon(
               Icons.arrow_back,
@@ -109,7 +109,7 @@ class SkincareScreen1 extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/detail_program_satu');
+                    Navigator.pushNamed(context, '/homepage');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 143, 78, 155),
@@ -120,7 +120,7 @@ class SkincareScreen1 extends StatelessWidget {
                         double.infinity, 50), // Memastikan tombol selebar layar
                   ),
                   child: Text(
-                    "Mulai",
+                    "Selesai",
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.white,
@@ -163,3 +163,5 @@ class SkincareScreen1 extends StatelessWidget {
     );
   }
 }
+
+

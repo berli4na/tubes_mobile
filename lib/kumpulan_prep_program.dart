@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ProgramSatuScreen extends StatelessWidget {
+class PreparationProgramScreen extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String description;
+  final String imagePath;
+  final String buttonRoute;
+  final List<Map<String, String>> benefits;
+
+  PreparationProgramScreen({
+    required this.title,
+    required this.subtitle,
+    required this.description,
+    required this.imagePath,
+    required this.buttonRoute,
+    required this.benefits,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,14 +30,12 @@ class ProgramSatuScreen extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/homepage');
+                  Navigator.pop(context);
                 },
               ),
             ),
-            // Menggunakan Column dengan MainAxisAlignment.center
             Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // Memastikan kolom berada di tengah
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 120,
@@ -29,24 +43,24 @@ class ProgramSatuScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: AssetImage('images/model1.jpeg'), // Path ke gambar
+                      image: AssetImage(imagePath),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Yoga Wajah: Menghilangkan ',
+                  title,
                   style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 143, 78, 155),
                   ),
-                  textAlign: TextAlign.center, // Menjaga teks berada di tengah
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 3),
                 Text(
-                  ' Kantung Mata',
+                  subtitle,
                   style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.bold,
@@ -57,23 +71,10 @@ class ProgramSatuScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Text(
-                    'Yoga ini meningkatkan sirkulasi darah di sekitar area mata, mengurangi tanda-tanda lelah, dan membuat mata menjadi lebih segar. Lakukan secara rutin untuk mendapatkan hasil yang maksimal, Manjakan dirimu dan ikuti tutorial  dasar yoga wajah ini.',
+                    description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: Text(
-                    ' Manjakan dirimu dan ikuti tutorial  dasar yoga wajah ini.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
                       color: Colors.black54,
                     ),
                   ),
@@ -92,7 +93,7 @@ class ProgramSatuScreen extends StatelessWidget {
                       Icon(Icons.timer, color: Colors.white),
                       SizedBox(width: 5),
                       Text(
-                        '10 menit per sesi',
+                        '5 menit per sesi',
                         style: TextStyle(color: Colors.white),
                       ),
                     ],
@@ -102,22 +103,13 @@ class ProgramSatuScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(color: Color(0xFFF2E4F8)),
-                        child: Column(
-                          children: [
-                            BenefitItem(
-                                text: 'Mengencangkan kulit di daerah mata'),
-                            BenefitItem(
-                                text:
-                                    'Menghilangkan bengkak dan membantu menghilangkan kantung mata'),
-                            BenefitItem(text: 'Menyegarkan mata lelah '),
-                          ],
-                        ),
-                      ),
-                    ],
+                    children: benefits
+                        .map((benefit) => BenefitItem(
+                              iconPath: benefit['iconPath']!,
+                              text: benefit['text']!,
+                              iconSize: 20.0,
+                            ))
+                        .toList(),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -126,15 +118,14 @@ class ProgramSatuScreen extends StatelessWidget {
                       horizontal: 16.0, vertical: 8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/persiapan_skincare1');
+                      Navigator.pushNamed(context, buttonRoute);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 143, 78, 155),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
-                      minimumSize: Size(double.infinity,
-                          50), // Memastikan tombol selebar layar
+                      minimumSize: Size(double.infinity, 50),
                     ),
                     child: Text(
                       "Mulai",
@@ -156,25 +147,33 @@ class ProgramSatuScreen extends StatelessWidget {
 }
 
 class BenefitItem extends StatelessWidget {
+  final String iconPath;
+  final double iconSize;
   final String text;
 
-  BenefitItem({required this.text});
+  BenefitItem({
+    required this.iconPath,
+    this.iconSize = 20.0,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start, // Menyelaraskan item di atas
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset('images/Check.png'),
+          Image.asset(
+            iconPath,
+            width: iconSize,
+            height: iconSize,
+          ),
           SizedBox(width: 10),
           Expanded(
             child: Text(
               text,
-              textAlign:
-                  TextAlign.justify, // Mengatur teks menjadi rata kanan kiri
+              textAlign: TextAlign.justify,
               style: TextStyle(color: Colors.black54, fontSize: 14),
             ),
           ),
