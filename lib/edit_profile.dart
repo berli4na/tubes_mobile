@@ -6,7 +6,6 @@ class EditProfilPage extends StatefulWidget {
   @override
   _EditProfilPageState createState() => _EditProfilPageState();
 }
-
 class _EditProfilPageState extends State<EditProfilPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -14,7 +13,6 @@ class _EditProfilPageState extends State<EditProfilPage> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _birthDateController = TextEditingController();
   final TextEditingController _skinTypeController = TextEditingController();
-
   Future<void> _selectDate(BuildContext context) async {
     DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -26,7 +24,6 @@ class _EditProfilPageState extends State<EditProfilPage> {
       _birthDateController.text = "${selectedDate.toLocal()}".split(' ')[0];
     }
   }
-
   void _showSuccessMessage() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -35,7 +32,6 @@ class _EditProfilPageState extends State<EditProfilPage> {
       ),
     );
   }
-
   void _onSave() {
     if (_formKey.currentState!.validate()) {
       _showSuccessMessage();
@@ -64,9 +60,9 @@ class _EditProfilPageState extends State<EditProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDAB6FC),
+      backgroundColor:  Colors.purple[100],
       appBar: AppBar(
-        backgroundColor: const Color(0xFFDAB6FC),
+        backgroundColor:  Colors.purple[100],
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),

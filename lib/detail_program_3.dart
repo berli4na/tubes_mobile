@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DetailProgramSatuScreen extends StatelessWidget {
+class DetailProgram3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +10,7 @@ class DetailProgramSatuScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushNamed(context, '/persiapan_skincare');
+            Navigator.pushNamed(context, '/homepage');
           },
         ),
         backgroundColor: Colors.purple[100],
@@ -21,7 +21,7 @@ class DetailProgramSatuScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'Yoga Wajah: Menghilangkan Kantung Mata',
+              'Yoga Wajah: Menghilangkan Lipatan Hidung',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -52,35 +52,27 @@ class DetailProgramSatuScreen extends StatelessWidget {
                 children: [
                   ExerciseStep(
                     stepNumber: 1,
-                    stepText: "Siapkan Eye Cream atau Face Oil (Optional). Pastikan tangan anda bersih sebelumnya. ",
+                    stepText: "Gunakan sedikit minyak wajah atau pelembap untuk memudahkan gerakan pijatan.",
                   ),
                   ExerciseStep(
                     stepNumber: 2,
-                    stepText: "Buat huruf 'V' dengan jari telunjuk dan jari tengah seperti simbol kemenangan (peace).",
+                    stepText: "Tempatkan ujung jari telunjuk dan tengah di kedua sisi hidung, tepat di atas garis lipatan nasolabial.",
                   ),
                   ExerciseStep(
                     stepNumber: 3,
-                    stepText: "Biarkan bentuk V ini berada di bawah mata kedua mata",
+                    stepText: "Lakukan gerakan memutar kecil ke arah luar (ke pipi) selama 30 detik – 1 menit.",
                   ),
                   ExerciseStep(
                     stepNumber: 4,
-                    stepText: "Biarkan ujung kedua jari menyentuh sudut mata Anda.",
+                    stepText: "Setelah itu, gunakan ibu jari dan telunjuk untuk mencubit lembut sepanjang garis lipatan nasolabial dari atas ke bawah.",
                   ),
                   ExerciseStep(
                     stepNumber: 5,
-                    stepText: "Sekarang lihat ke atas sambil memegang jari-jari erat-erat di kulit. Jangan gerakkan dagu ke atas.",
+                    stepText: "Lakukan cubitan ringan ini selama 1 menit.",
                   ),
-                  ExerciseStep(
+                   ExerciseStep(
                     stepNumber: 6,
-                    stepText: "Tutup setengah mata Anda, seolah-olah Anda sedang menyipitkan mata.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 7,
-                    stepText: "Rasakan otot-otot menggigil dan kelopak mata bergetar. Tahan posisi ini selama 5 detik.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 8,
-                    stepText: "Lepaskan dan ulangi sebanyak yang Anda inginkan.",
+                    stepText: "Akhiri dengan menekan kedua sisi garis lipatan dengan jari telunjuk selama 10 detik.",
                   ),
                 ],
               ),

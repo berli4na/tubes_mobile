@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DetailProgramTigaScreen extends StatelessWidget {
+class DetailProgram6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +10,7 @@ class DetailProgramTigaScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushNamed(context, '/persiapan_skincare');
+            Navigator.pushNamed(context, '/homepage');
           },
         ),
         backgroundColor: Colors.purple[100],
@@ -21,7 +21,7 @@ class DetailProgramTigaScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'Yoga Wajah: Mempertegas Rahang',
+              'Yoga Wajah menggunakan Face Roller',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -52,23 +52,27 @@ class DetailProgramTigaScreen extends StatelessWidget {
                 children: [
                   ExerciseStep(
                     stepNumber: 1,
-                    stepText: "Hisap pipi ke dalam sehingga bibir membentuk seperti mulut ikan.",
+                    stepText: "Siapkan roller wajah (baik jade roller atau gua sha) dan dinginkan di kulkas terlebih dahulu untuk efek menenangkan.",
                   ),
                   ExerciseStep(
                     stepNumber: 2,
-                    stepText: "Gerakkan rahang seperti sedang mengunyah sambil menutup mulut.",
+                    stepText: "Gulirkan roller ke arah luar (ke arah pelipis).",
                   ),
                   ExerciseStep(
                     stepNumber: 3,
-                    stepText: "Duduk dengan tegak, perlahan-lahan angkat kepala dan pandang ke atas.",
+                    stepText: "Lakukan gerakan ini sebanyak 5-10 kali di setiap sisi.",
                   ),
                   ExerciseStep(
                     stepNumber: 4,
-                    stepText: "Ucapkan huruf vokal \"A\", \"E\", \"I\", \"O\", dan \"U\" dengan ekspresi yang berlebihan.",
+                    stepText: "Gunakan sisi kecil roller dan mulailah dari sudut dalam mata.",
                   ),
                   ExerciseStep(
                     stepNumber: 5,
-                    stepText: "Gerakkan rahang seperti sedang membuka dan menutup tanpa benar-benar membuka mulut.",
+                    stepText: "Gulirkan ke arah luar (ke pelipis) dengan tekanan sangat ringan. Dan ulangi sebanyak 5-10 kali.",
+                  ),
+                  ExerciseStep(
+                    stepNumber: 6,
+                    stepText: "Akhiri dengan menggunakan roller pada garis rahang ke arah leher untuk membantu mengalirkan cairan limfatik.",
                   ),
                 ],
               ),
