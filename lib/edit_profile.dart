@@ -39,7 +39,15 @@ class _EditProfilPageState extends State<EditProfilPage> {
   void _onSave() {
     if (_formKey.currentState!.validate()) {
       _showSuccessMessage();
-      Navigator.pushNamed(context, '/profile_page');
+      
+      // Mengirim data kembali ke ProfilePage
+      Navigator.pop(context, {
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'gender': _genderController.text,
+        'birthDate': _birthDateController.text,
+        'skinType': _skinTypeController.text,
+      });
     }
   }
 
@@ -63,7 +71,7 @@ class _EditProfilPageState extends State<EditProfilPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushNamed(context, '/profile_page');
+            Navigator.pop(context);
           },
         ),
       ),
