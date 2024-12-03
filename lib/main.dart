@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< HEAD
 import 'package:ui/detail_program_1.dart';
 import 'package:ui/detail_program_2.dart';
 import 'package:ui/detail_program_3.dart';
@@ -20,6 +21,15 @@ import 'package:ui/sign_up.dart';
 import 'package:ui/splash_screen.dart';
 import 'package:ui/waktu.dart';
 
+=======
+import 'package:ui/detail_program1.dart';
+import 'package:ui/detail_program2.dart';
+import 'package:ui/detail_program3.dart';
+import 'package:ui/end_program.dart';
+import 'package:ui/login.dart';
+import 'package:ui/prep_program3.dart';
+import 'package:ui/prep_skincare.dart';
+>>>>>>> 4bd13e9641892f02f6180eadbd73dec8bbc6c3ca
 
 void main() {
   runApp(const MyApp());
@@ -38,11 +48,22 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       initialRoute: '/homepage',
       routes: {
         '/splash_screen': (context) => TampilanAwalScreen(),
         '/get_started': (context) => MemulaiScreen(),
         '/sign_up': (context) => MendaftarPage(),
+=======
+      initialRoute: '/detail_program_satu',
+      routes: {
+        '/program_tiga': (context) => ProgramTigaScreen(),
+        '/detail_program_tiga': (context) => DetailProgramTigaScreen(),
+        '/detail_program_satu': (context) => DetailProgramSatuScreen(),
+        '/detail_program_dua': (context) => DetailProgramDuaScreen(),
+        '/program_selesai': (context) => ProgramBerakhirScreen(),
+        '/persiapan_skincare': (context) => SkincareScreen(),
+>>>>>>> 4bd13e9641892f02f6180eadbd73dec8bbc6c3ca
         '/login': (context) => LoginPage(),
         '/reset_password': (context) => ResetPasswordPage(),
         '/reset_password_confirm': (context) => ResetPasswordScreen(),
