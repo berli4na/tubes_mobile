@@ -9,13 +9,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ProgramWaktuScreen(),
+      initialRoute: '/',
       routes: {
-        '/week_1_screen': (context) => Week1Screen(),
-        '/week_2_screen': (context) => Week2Screen(),
-        '/week_3_screen': (context) => Week3Screen(),
-        '/week_4_screen': (context) => Week4Screen(),
+        '/': (context) => ProgramWaktuScreen(),
         '/day_detail_screen': (context) => DayDetailScreen(),
+        '/antiaging_eyelift1': (context) => AntiAgingEyeLiftScreen(day: 1),
+        '/antiaging_eyelift2': (context) => AntiAgingEyeLiftScreen(day: 2),
+        '/antiaging_eyelift3': (context) => AntiAgingEyeLiftScreen(day: 3),
+        '/antiaging_eyelift4': (context) => AntiAgingEyeLiftScreen(day: 4),
+        '/antiaging_eyelift5': (context) => AntiAgingEyeLiftScreen(day: 5),
+        '/antiaging_eyelift6': (context) => AntiAgingEyeLiftScreen(day: 6),
+        '/antiaging_eyelift7': (context) => AntiAgingEyeLiftScreen(day: 7),
+        '/antiaging_pose': (context) => AntiAgingPoseScreen(day: 1),
+        '/antiaging_pose2': (context) => AntiAgingPoseScreen(day: 2),
+        '/antiaging_pose3': (context) => AntiAgingPoseScreen(day: 3),
+        '/antiaging_pose4': (context) => AntiAgingPoseScreen(day: 4),
+        '/antiaging_pose5': (context) => AntiAgingPoseScreen(day: 5),
+        '/antiaging_pose6': (context) => AntiAgingPoseScreen(day: 6),
+        '/antiaging_pose7': (context) => AntiAgingPoseScreen(day: 7),
       },
     );
   }
@@ -32,46 +43,46 @@ class _ProgramWaktuScreenState extends State<ProgramWaktuScreen> {
     (index) => List.generate(7, (index) => false), // 4 pekan, 7 hari per pekan
   );
 
-  int? selectedWeek;
-  int? selectedDay;
-
-  void toggleProgress(int week, int day) {
-    setState(() {
-      progress[week][day] = !progress[week][day];
-      selectedWeek = week;
-      selectedDay = day;
-    });
-  }
-
-  void navigateToNextIncompleteWeek() {
-    if (selectedWeek != null && selectedDay != null) {
-      navigateToScreen(selectedWeek!, selectedDay!);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Pilih hari terlebih dahulu!")),
-      );
+  void navigateToNextIncompleteDay() {
+    for (int week = 0; week < progress.length; week++) {
+      for (int day = 0; day < progress[week].length; day++) {
+        if (!progress[week][day]) {
+          navigateToScreen(week + 1, day + 1);
+          return;
+        }
+      }
     }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Semua hari sudah selesai!")),
+    );
   }
 
   void navigateToScreen(int week, int day) {
-    String route = '';
+    String routeName = getRouteName(week, day);
 
-    if (week == 1) {
-      route = '/week_1_screen';
-    } else if (week == 2) {
-      route = '/week_2_screen';
-    } else if (week == 3) {
-      route = '/week_3_screen';
-    } else if (week == 4) {
-      route = '/week_4_screen';
-    }
+    Navigator.pushNamed(
+      context,
+      routeName,
+      arguments: {'week': week, 'day': day},
+    ).then((_) {
+      // Update progress after coming back from the day detail screen
+      setState(() {
+        progress[week - 1][day - 1] = true;
+      });
+    });
+  }
 
-    if (route.isNotEmpty) {
-      Navigator.pushNamed(
-        context,
-        route,
-        arguments: {'week': week, 'day': day},
-      );
+  String getRouteName(int week, int day) {
+    // Logic to determine the correct route based on the week and day
+    if (week == 1 || week == 3) {
+      // Anti-Aging Eye Lift routes for week 1 and week 3
+      return '/antiaging_eyelift$day';
+    } else if (week == 2 || week == 4) {
+      // Anti-Aging Pose routes for week 2 and week 4
+      return '/antiaging_pose$day';
+    } else {
+      return '/day_detail_screen'; // Default route for other days
     }
   }
 
@@ -80,6 +91,7 @@ class _ProgramWaktuScreenState extends State<ProgramWaktuScreen> {
     return Scaffold(
       body: Column(
         children: [
+          // Header with remaining days
           Container(
             padding: EdgeInsets.all(16.0),
             color: Color.fromARGB(255, 143, 78, 155),
@@ -91,43 +103,45 @@ class _ProgramWaktuScreenState extends State<ProgramWaktuScreen> {
                     IconButton(
                       icon: Icon(Icons.arrow_back, color: Colors.white),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/prep_antiaging');
-                      },
+                              Navigator.pushNamed(context, '/prep_antiaging');
+                            },
                     ),
                     Text(
-                      '28 Hari Tersisa',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      '30 Hari Tersisa',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                   ],
-                ),
-                IconButton(
-                  icon: Icon(Icons.calendar_today, color: Colors.white),
-                  onPressed: () {
-                    // Your calendar icon action
-                  },
                 ),
               ],
             ),
           ),
+
+          // Week list
           Expanded(
             child: ListView.builder(
-              itemCount: 4,
+              itemCount: progress.length,
               itemBuilder: (context, index) {
-                return WeeklyProgressCard(
+                return WeekSection(
                   week: index + 1,
                   progress: progress[index],
-                  onTap: toggleProgress,
+                  onDayTap: (day) {
+                    navigateToScreen(index + 1, day + 1);
+                  },
                 );
               },
             ),
           ),
+
+          // GO! button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
-              onPressed: navigateToNextIncompleteWeek,
+              onPressed: navigateToNextIncompleteDay,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 143, 78, 155),
-                side: BorderSide(color: Color.fromARGB(255, 143, 78, 155), width: 1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
@@ -148,17 +162,21 @@ class _ProgramWaktuScreenState extends State<ProgramWaktuScreen> {
   }
 }
 
-class WeeklyProgressCard extends StatelessWidget {
+class WeekSection extends StatelessWidget {
   final int week;
   final List<bool> progress;
-  final Function(int week, int day) onTap;
+  final Function(int day) onDayTap;
 
-  const WeeklyProgressCard({required this.week, required this.progress, required this.onTap});
+  const WeekSection({
+    required this.week,
+    required this.progress,
+    required this.onDayTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -169,58 +187,27 @@ class WeeklyProgressCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8.0),
+          SizedBox(height: 10),
+          // Progress row
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(7, (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        // Navigasi ke halaman detail hari
-                        Navigator.pushNamed(
-                          context,
-                          '/day_detail_screen',
-                          arguments: {'week': week, 'day': index},
-                        );
-                      },
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: progress[index] ? Colors.green : Colors.grey[300],
-                        child: progress[index]
-                            ? Icon(Icons.check, color: Colors.white)
-                            : Text(
-                                '${index + 1}',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                      ),
+                    return DayButton(
+                      day: index + 1,
+                      isCompleted: progress[index],
+                      onTap: () => onDayTap(index),
                     );
                   }),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: ['SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB', 'MIN']
-                      .map((day) => Text(
-                            day,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ))
-                      .toList(),
-                ),
               ],
             ),
           ),
@@ -230,62 +217,39 @@ class WeeklyProgressCard extends StatelessWidget {
   }
 }
 
-class Week1Screen extends StatelessWidget {
+class DayButton extends StatelessWidget {
+  final int day;
+  final bool isCompleted;
+  final VoidCallback onTap;
+
+  const DayButton({
+    required this.day,
+    required this.isCompleted,
+    required this.onTap,
+  });
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    final week = args?['week'] ?? 1;
-    final day = args?['day'] ?? 0;
-
-    return Scaffold(
-      appBar: AppBar(title: Text('Week 1 Screen')),
-      body: Center(child: Text('Details for Week $week, Day $day')),
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isCompleted ? Colors.green : Colors.grey[300],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
+      child: Text(
+        '$day',
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
 
-class Week2Screen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    final week = args?['week'] ?? 2;
-    final day = args?['day'] ?? 0;
-
-    return Scaffold(
-      appBar: AppBar(title: Text('Week 2 Screen')),
-      body: Center(child: Text('Details for Week $week, Day $day')),
-    );
-  }
-}
-
-class Week3Screen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    final week = args?['week'] ?? 3;
-    final day = args?['day'] ?? 0;
-
-    return Scaffold(
-      appBar: AppBar(title: Text('Week 3 Screen')),
-      body: Center(child: Text('Details for Week $week, Day $day')),
-    );
-  }
-}
-
-class Week4Screen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    final week = args?['week'] ?? 4;
-    final day = args?['day'] ?? 0;
-
-    return Scaffold(
-      appBar: AppBar(title: Text('Week 4 Screen')),
-      body: Center(child: Text('Details for Week $week, Day $day')),
-    );
-  }
-}
-
+// Day Detail Screen
 class DayDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -294,8 +258,57 @@ class DayDetailScreen extends StatelessWidget {
     final day = args?['day'] ?? 0;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Detail for Week $week, Day $day')),
-      body: Center(child: Text('Detail content for Week $week, Day $day')),
+      appBar: AppBar(
+        title: Text('Detail Pekan $week, Hari $day'),
+      ),
+      body: Center(
+        child: Text(
+          'Konten detail untuk Pekan $week, Hari $day',
+          style: TextStyle(fontSize: 16),
+        ),
+      ),
+    );
+  }
+}
+
+// Anti-Aging Eye Lift Screen
+class AntiAgingEyeLiftScreen extends StatelessWidget {
+  final int day;
+  const AntiAgingEyeLiftScreen({Key? key, required this.day}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Anti-Aging Eye Lift - Hari $day'),
+      ),
+      body: Center(
+        child: Text(
+          'Konten Anti-Aging Eye Lift untuk Hari $day',
+          style: TextStyle(fontSize: 16),
+        ),
+      ),
+    );
+  }
+}
+
+// Anti-Aging Pose Screen
+class AntiAgingPoseScreen extends StatelessWidget {
+  final int day;
+  const AntiAgingPoseScreen({Key? key, required this.day}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Anti-Aging Pose - Hari $day'),
+      ),
+      body: Center(
+        child: Text(
+          'Konten Anti-Aging Pose untuk Hari $day',
+          style: TextStyle(fontSize: 16),
+        ),
+      ),
     );
   }
 }
