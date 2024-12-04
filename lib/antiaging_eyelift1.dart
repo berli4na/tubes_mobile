@@ -137,7 +137,7 @@ class AntiAgingEyeLift1 extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/latihan_screen');
+                Navigator.pushNamed(context, '/latihan_eyelift1');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 143, 78, 155),

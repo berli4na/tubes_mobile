@@ -35,6 +35,8 @@ import 'package:ui/antiaging_pose5.dart';
 import 'package:ui/antiaging_pose6.dart';
 import 'package:ui/antiaging_pose7.dart';
 import 'package:ui/history_screen.dart';
+import 'package:ui/latihan_eyelift1.dart';
+
 
 
 void main() {
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/homepage',
+      initialRoute: '/WeeklyProgress_Screen',
       routes: {                
         '/splash_screen': (context) => TampilanAwalScreen(),
         '/get_started': (context) => MemulaiScreen(),
@@ -85,6 +87,8 @@ class MyApp extends StatelessWidget {
         '/antiaging_pose5':(context)=> AntiAgingPose5(),
         '/antiaging_pose6':(context)=> AntiAgingPose6(),
         '/antiaging_pose7':(context)=> AntiAgingPose7(),
+        '/latihan_eyelift1' : (context)=> LatihanEyeLift1(),
+        
 
         //program eksternal
         '/detail_program_1' : (context) => DetailProgram1(),

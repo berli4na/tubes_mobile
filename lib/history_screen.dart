@@ -18,10 +18,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-        backgroundColor: Colors.purple[100],
-      ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
@@ -82,25 +78,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-  title: Row(
-    children: [
-      IconButton(
-        icon: const Icon(Icons.arrow_back), // Ikon panah ke kiri
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-          ); // Navigasi ke HomePage
-        },
+        title: const Text('Tanggal'),
+        backgroundColor: Colors.purple[100],
       ),
-      const SizedBox(width: 8),
-      const Text('Tanggal'),
-    ],
-  ),
-  backgroundColor: Colors.purple[100],
-),
-
-
       body: Column(
         children: [
           Container(
