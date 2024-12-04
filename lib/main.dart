@@ -18,7 +18,23 @@ import 'package:ui/sign_up.dart';
 import 'package:ui/edit_profile.dart';
 import 'package:ui/splash_screen.dart';
 import 'package:ui/get_started.dart';
-import 'package:ui/waktu.dart';
+import 'package:ui/WeeklyProgress_Screen.dart';
+import 'package:ui/prep_antiaging.dart';
+import 'package:ui/antiaging_eyelift1.dart';
+import 'package:ui/antiaging_eyelift2.dart';
+import 'package:ui/antiaging_eyelift3.dart';
+import 'package:ui/antiaging_eyelift4.dart';
+import 'package:ui/antiaging_eyelift5.dart';
+import 'package:ui/antiaging_eyelift6.dart';
+import 'package:ui/antiaging_eyelift7.dart';
+import 'package:ui/antiaging_pose1.dart';
+import 'package:ui/antiaging_pose2.dart';
+import 'package:ui/antiaging_pose3.dart';
+import 'package:ui/antiaging_pose4.dart';
+import 'package:ui/antiaging_pose5.dart';
+import 'package:ui/antiaging_pose6.dart';
+import 'package:ui/antiaging_pose7.dart';
+import 'package:ui/history_screen.dart';
 
 
 void main() {
@@ -52,7 +68,23 @@ class MyApp extends StatelessWidget {
         '/profile_page': (context) => ProfilePage(),
         '/edit_profile': (context) => EditProfilPage(),
 
-        '/waktu': (context) => YogaFaceScreen(),
+        '/history_screen':(context)=> HistoryScreen(),
+        '/WeeklyProgress_Screen':(context) => ProgramWaktuScreen(),
+        '/prep_antiaging':(context)=> PersiapanAntiAging(),
+        '/antiaging_eyelift1':(context)=> AntiAgingEyeLift1(),
+        '/antiaging_eyelift2':(context)=> AntiAgingEyeLift2(),
+        '/antiaging_eyelift3':(context)=> AntiAgingEyeLift3(),
+        '/antiaging_eyelift4':(context)=> AntiAgingEyeLift4(),
+        '/antiaging_eyelift5':(context)=> AntiAgingEyeLift5(),
+        '/antiaging_eyelift6':(context)=> AntiAgingEyeLift6(),
+        '/antiaging_eyelift7':(context)=> AntiAgingEyeLift7(),
+        '/antiaging_pose1':(context)=> AntiAgingPose1(),
+        '/antiaging_pose2':(context)=> AntiAgingPose2(),
+        '/antiaging_pose3':(context)=> AntiAgingPose3(),
+        '/antiaging_pose4':(context)=> AntiAgingPose4(),
+        '/antiaging_pose5':(context)=> AntiAgingPose5(),
+        '/antiaging_pose6':(context)=> AntiAgingPose6(),
+        '/antiaging_pose7':(context)=> AntiAgingPose7(),
 
         //program eksternal
         '/detail_program_1' : (context) => DetailProgram1(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PanduanSkincare extends StatelessWidget {
   @override
@@ -6,13 +7,15 @@ class PanduanSkincare extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/homepage');
-            },
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            )),
+          onPressed: () {
+            Navigator.pushNamed(context, '/homepage');
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
+        title: Text('Rekomendasi Skincare', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.purple[100],
       ),
       backgroundColor: Colors.purple[100],
@@ -23,90 +26,63 @@ class PanduanSkincare extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Untuk yoga wajah anda memerlukan',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                'Rekomendasi Skincare untuk Semua Jenis Kulit',
+                style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 143, 78, 155),
+                ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 10),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildProductIcon('images/moist.png', 'Moisturizer Cream'),
-                  Row(
-                    children: [
-                      _buildProductIcon('images/mask.png', 'Moisturizer Mask'),
-                      _buildProductIcon('images/lotion.png', 'Lotion'),
-                    ],
-                  ),
-                  _buildProductIcon('images/scrub.png', 'Scrub'),
+              SizedBox(height: 20),
+              Text(
+                'Sebelum melakukan yoga wajah, penting untuk menyiapkan kulit Anda dengan produk skincare yang tepat. Berikut adalah rekomendasi produk yang cocok untuk semua jenis kulit:',
+                style: GoogleFonts.poppins(fontSize: 16),
+                textAlign: TextAlign.justify,
+              ),
+              SizedBox(height: 20),
+              _buildProductSection(
+                title: 'Pelembap',
+                products: [
+                  _Product(name: 'SKINTIFIC', imagePath: 'images/Skintific.jpg'), // Ganti dengan nama dan gambar produk
+                  _Product(name: 'SOMETHINC', imagePath: 'images/Somethinc.jpg'), // Ganti dengan nama dan gambar produk
+                  _Product(name: 'OLAY', imagePath: 'images/Olay.jpg'), // Ganti dengan nama dan gambar produk
                 ],
               ),
-              SizedBox(height: 40),
-              Text(
-                'Siapkan kulitmu untuk yoga wajah',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 143, 78, 155)),
+              _buildProductSection(
+                title: 'Masker Wajah',
+                products: [
+                  _Product(name: 'Azarine Purifying Deep Cleansing Clay Mask ', imagePath: 'images/Azarine.jpg'), // Ganti dengan nama dan gambar produk
+                  _Product(name: 'Wardah Nature Daily Mineral Clarifying Clay Mask', imagePath: 'images/Wardah.jpg'), // Ganti dengan nama dan gambar produk
+                ],
               ),
-              SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.purple.shade50,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildPreparationStep(
-                            'images/cucimuka.png', 'Bersihkan wajahmu'),
-                        _buildPreparationStep(
-                            'images/pakaicream.png', 'Oleskan toner'),
-                      ],
-                    ),
-                  ],
+              _buildProductSection(
+                title: 'Lotion',
+                products: [
+                  _Product(name: 'Laikou Japan Sakura Lotion', imagePath: 'images/Lotion.jpg'), // Ganti dengan nama dan gambar produk
+                ],
+              ),
+              _buildProductSection(
+                title: 'Scrub Wajah',
+                products: [
+                  _Product(name: 'Safi Age Defy Anti Aging Deep Exfoliator Face Scrub productnation', imagePath: 'images/Scrub.jpg'), // Ganti dengan nama dan gambar produk
+                ],
+              ),
+              SizedBox(height: 15),
+              Text(
+                'Langkah Persiapan Sebelum Face Yoga',
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 143, 78, 155),
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                'Gunakan produk minyak pijat',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 143, 78, 155)),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.purple.shade50,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildPreparationStep('images/cucimuka.png',
-                            'Oleskan cream atau minyak pijat'),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              _buildPreparationStep('images/cucimuka.png', 'Bersihkan Wajah', 'Pastikan wajah bersih dari kotoran dan makeup.'),
+              _buildPreparationStep('images/pakaicream.png', 'Oleskan Toner', 'Toner membantu menyiapkan kulit untuk menerima produk selanjutnya.'),
               SizedBox(height: 30),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/homepage');
@@ -116,8 +92,7 @@ class PanduanSkincare extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    minimumSize: Size(
-                        double.infinity, 50), // Memastikan tombol selebar layar
+                    minimumSize: Size(double.infinity, 50),
                   ),
                   child: Text(
                     "Selesai",
@@ -135,33 +110,76 @@ class PanduanSkincare extends StatelessWidget {
     );
   }
 
-  Widget _buildProductIcon(String imagePath, String label) {
-    return Row(
+  Widget _buildProductSection({required String title, required List<_Product> products}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(imagePath,
-            width: 50, height: 50), // Adjust as per your icon size
-        SizedBox(width: 10.0),
-        Text(label,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        Text(
+          title,
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 143, 78, 155),
+          ),
+        ),
+        SizedBox(height: 10),
+        Column(
+          children: products.map((product) => _buildProductCard(product.imagePath, product.name)).toList(),
+        ),
+        SizedBox(height: 20),
       ],
     );
   }
 
-  Widget _buildPreparationStep(String imagePath, String label) {
-    return Column(
-      children: [
-        Image.asset(imagePath,
-            width: 80, height: 80), // Adjust size accordingly
-        SizedBox(height: 10),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold),
+  Widget _buildProductCard(String imagePath, String label) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Image.asset(imagePath, width: 50, height: 50),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            ),
+          ],
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildPreparationStep(String imagePath, String label, String description) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Image.asset(imagePath, width: 50, height: 50),
+            SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  SizedBox(height: 5),
+                  Text(description, style: TextStyle(fontSize: 14)),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
+class _Product {
+  final String name;
+  final String imagePath;
 
+  _Product({required this.name, required this.imagePath});
+}

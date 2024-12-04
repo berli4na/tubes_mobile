@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ui/prep_antiaging.dart';
+import 'package:ui/history_screen.dart';
 import 'package:ui/kumpulan_prep_program.dart';
+import 'package:ui/prep_antiaging.dart';
+import 'package:ui/articles_page.dart';
 import 'package:ui/profile_page.dart';
 
 class ProgramHomepage extends StatelessWidget {
@@ -32,7 +36,142 @@ class ProgramHomepage extends StatelessWidget {
             ),
           ),
           
-          SizedBox(height: 20),
+          SizedBox(height: 20), 
+SingleChildScrollView(
+  child: Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'TUJUAN MINGGU',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  {'day': 'Sen', 'date': 1},
+                  {'day': 'Sel', 'date': 2},
+                  {'day': 'Rab', 'date': 3},
+                  {'day': 'Kam', 'date': 4},
+                  {'day': 'Jum', 'date': 5},
+                  {'day': 'Sab', 'date': 6},
+                  {'day': 'Min', 'date': 7},
+                ].map((dayData) {
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to a new screen with the selected day
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HistoryScreen(
+                              ),
+                            ),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 15,
+                          backgroundColor: dayData['day'] == 'Rab'
+                              ? Colors.purple[100]
+                              : Colors.grey[300],
+                          child: Text(
+                            dayData['day'].toString().substring(0, 1),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '${dayData['date']}',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 10),
+              Divider(),
+              ListTile(
+                title: Text('AntiAging'),
+                subtitle: Text('30 Hari'),
+                trailing: Text('0%'),
+              ),
+            ],
+          ),
+        ),
+      ),
+      SizedBox(height: 10),
+      Center(
+        child: Text(
+          'Program Yoga Wajah',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Colors.black87,
+          ),
+        ),
+      ),
+      SizedBox(height: 10),
+      Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'AntiAging',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('30 Hari'),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigate to the program start page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PersiapanAntiAging(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple[100],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text('Mulai'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -339,7 +478,7 @@ class ProgramHomepage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+            bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color.fromARGB(
             255, 143, 78, 155), // Background color sesuai permintaan
         selectedItemColor: Colors.white, // Warna icon yang dipilih
@@ -350,19 +489,29 @@ class ProgramHomepage extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.article), // New article icon
+            label: 'Articles',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
         onTap: (index) {
-          if (index == 1) {
-            // Navigasi ke halaman profil ketika ikon Profile ditekan
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProfilePage()),
-            );
-          }
-        },
+      if (index == 1) {
+        // Navigasi ke halaman artikel ketika ikon Articles ditekan
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ArticlesPage()), // Navigate to your ArticlePage
+        );
+      } else if (index == 2) {
+        // Navigasi ke halaman profil ketika ikon Profile ditekan
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProfilePage()),
+        );
+      }
+      }
       ),
     );
   }
