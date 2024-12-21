@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'session.dart';
 
 class EditProfilPage extends StatefulWidget {
   const EditProfilPage({Key? key}) : super(key: key);
@@ -32,18 +34,44 @@ class _EditProfilPageState extends State<EditProfilPage> {
       ),
     );
   }
+
+ Future<void> _updateUser(String docId) async {
+  final Map<String, dynamic> updatedData = {
+    'name': _nameController.text,
+    'email': _emailController.text,
+    'gender': _genderController.text,
+    'birthDate': _birthDateController.text,
+    'skinType': _skinTypeController.text,
+    'updatedAt': Timestamp.now(),
+  };
+
+  try { 
+    
+    String? docId = await getData('session');
+    await FirebaseFirestore.instance.collection('users').doc(docId).update(updatedData);
+    Navigator.pop(context, updatedData);
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error updating user: ${e.toString()}')),
+    );
+  }
+}
+
+
   void _onSave() {
     if (_formKey.currentState!.validate()) {
       _showSuccessMessage();
       
       // Mengirim data kembali ke ProfilePage
-      Navigator.pop(context, {
+    /*  Navigator.pop(context, {
         'name': _nameController.text,
         'email': _emailController.text,
         'gender': _genderController.text,
         'birthDate': _birthDateController.text,
         'skinType': _skinTypeController.text,
-      });
+      });*/
+
+      _updateUser("ggg");
     }
   }
 

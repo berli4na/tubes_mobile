@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert'; 
+import 'package:crypto/crypto.dart'; 
+
 
 class MendaftarPage extends StatefulWidget {
   const MendaftarPage({super.key});
@@ -42,6 +46,7 @@ class _MendaftarPageState extends State<MendaftarPage> {
       _birthDateController.text = "${selectedDate.toLocal()}".split(' ')[0];
     }
   }
+
 
   Widget _buildTextFieldContainer({required Widget child}) {
     return Container(
@@ -131,6 +136,19 @@ class _MendaftarPageState extends State<MendaftarPage> {
       ),
     );
   }
+ Future<void> _daftar() async {
+        final pass = md5.convert(utf8.encode(_passwordController.text)).toString();
+        String docId = _emailController.text;
+      await FirebaseFirestore.instance.collection('users').doc(docId).set({
+                    'name': _nameController.text,
+                    'email': _emailController.text,
+                    'gender': _genderController.text,
+                    'birthDate': _birthDateController.text,
+                    'password': pass,
+                    'skinType':"Kulit Normal",
+                    'createdAt': Timestamp.now(),
+                  });
+  }
 
   // Modifikasi bagian _buildRegisterButton
   Widget _buildRegisterButton() {
@@ -164,7 +182,7 @@ class _MendaftarPageState extends State<MendaftarPage> {
                   setState(() {
                     _isLoading = true;
                   });
-
+                  _daftar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: const Text('Akun berhasil terdaftar'),

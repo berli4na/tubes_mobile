@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui/articles_page.dart';
 import 'package:ui/kumpulan_prep_program.dart';
 import 'package:ui/profile_page.dart';
 
@@ -340,30 +341,41 @@ class ProgramHomepage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromARGB(
-            255, 143, 78, 155), // Background color sesuai permintaan
-        selectedItemColor: Colors.white, // Warna icon yang dipilih
-        unselectedItemColor: Colors.purple[100],
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        onTap: (index) {
-          if (index == 1) {
-            // Navigasi ke halaman profil ketika ikon Profile ditekan
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProfilePage()),
-            );
-          }
-        },
-      ),
+          backgroundColor: Color.fromARGB(
+              255, 143, 78, 155), // Background color sesuai permintaan
+          selectedItemColor: Colors.white, // Warna icon yang dipilih
+          unselectedItemColor: Colors.purple[100],
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.article), // New article icon
+              label: 'Articles',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          onTap: (index) {
+            if (index == 1) {
+              // Navigasi ke halaman artikel ketika ikon Articles ditekan
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ArticlesPage()), // Navigate to your ArticlePage
+              );
+            } else if (index == 2) {
+              // Navigasi ke halaman profil ketika ikon Profile ditekan
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            }
+          })
     );
   }
 }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
+import 'session.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,12 +53,27 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
-    
+
+
+     final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    // Hash password menggunakan MD5
+    final hashedPassword = md5.convert(utf8.encode(password)).toString();
+
     try {
       // Simulate API call
       await Future.delayed(const Duration(seconds: 2));
-      // Add your login logic here
-      
+      // Add your login logicere
+        final querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .where('password', isEqualTo: hashedPassword)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+         saveData('session',email);
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -63,6 +82,16 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
         Navigator.pushNamed(context, '/homepage');
+      }
+      }else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Email atau kata sandi salah'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     } catch (e) {
       if (mounted) {

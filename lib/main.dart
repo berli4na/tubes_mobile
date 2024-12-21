@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ui/detail_program_1.dart';
@@ -19,9 +20,13 @@ import 'package:ui/edit_profile.dart';
 import 'package:ui/splash_screen.dart';
 import 'package:ui/get_started.dart';
 import 'package:ui/waktu.dart';
+import 'firebase_options.dart';
 
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
@@ -38,7 +43,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/homepage',
+      initialRoute: '/splash_screen',
       routes: {                
         '/splash_screen': (context) => TampilanAwalScreen(),
         '/get_started': (context) => MemulaiScreen(),
@@ -46,8 +51,10 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/reset_password': (context) => ResetPasswordPage(),
         '/reset_password_confirm': (context) => ResetPasswordScreen(),
+        
         //beranda
         '/homepage': (context) => ProgramHomepage(),
+        
         //profil
         '/profile_page': (context) => ProfilePage(),
         '/edit_profile': (context) => EditProfilPage(),
@@ -64,7 +71,7 @@ class MyApp extends StatelessWidget {
         '/detail_program_7' : (context) => DetailProgram7(),
 
         //panduan skincare
-        'panduan_skincare' : (context) => PanduanSkincare(),
+        '/panduan_skincare' : (context) => PanduanSkincare(),
 
         //program selesai
         '/program_selesai': (context) => ProgramBerakhirScreen(),
