@@ -303,7 +303,7 @@ class ProgramHomepage extends StatelessWidget {
                     ),
                     MassageItem(
                       title: 'Pijatan dengan Gua-Sha',
-                      duration: '11 min',
+                      duration: '5 min',
                       tahapan: '7 Tahapan',
                       imagePath: 'images/model13.jpg',
                       color: Color.fromARGB(255, 143, 78, 155),
@@ -547,7 +547,7 @@ class MassageItem {
   final String tahapan;
   final Color color;
   final String imagePath;
-  final Widget destinationPage; // Halaman tujuan berbeda
+  final Widget destinationPage; 
 
   MassageItem({
     required this.title,

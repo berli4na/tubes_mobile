@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ui/homepage.dart';
 import 'package:ui/profile_page.dart';
 
@@ -8,7 +9,41 @@ class ArticlesPage extends StatefulWidget {
 }
 
 class _ArticlesPageState extends State<ArticlesPage> {
-  int _currentIndex = 1; // Default index untuk Articles
+  int _currentIndex = 1;
+  List<Article> articles = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchArticles();
+  }
+
+  // Fungsi untuk mengambil data artikel dari Firestore (hanya metadata)
+  Future<void> fetchArticles() async {
+    try {
+      final QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('articles').get();
+
+      final List<Article> fetchedArticles = snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        return Article(
+          id: doc.id,
+          title: data['title'],
+          description: data['description'],
+          imagePath: data['imagePath'],
+        );
+      }).toList();
+
+      setState(() {
+        articles = fetchedArticles;
+      });
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching articles: $e')),
+      );
+    }
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -16,13 +51,11 @@ class _ArticlesPageState extends State<ArticlesPage> {
     });
 
     if (index == 0) {
-      // Navigasi ke homepage
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProgramHomepage()),
       );
     } else if (index == 2) {
-      // Navigasi ke profil
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -34,90 +67,37 @@ class _ArticlesPageState extends State<ArticlesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Artikel Yoga Wajah', style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text('Artikel Yoga Wajah',
+              style: TextStyle(color: Colors.white)),
+        ),
         backgroundColor: Color.fromARGB(255, 143, 78, 155),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          ArticleItem(
-            title: 'Manfaat Yoga Wajah untuk Kecantikan',
-            description: 'Temukan bagaimana yoga wajah dapat membantu meningkatkan penampilan kulit Anda.',
-            imagePath: 'images/yoga1.jpg',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ArticleDetailPage(
-                    title: 'Manfaat Yoga Wajah untuk Kecantikan',
-                    content: '''
-Yoga wajah adalah latihan yang melibatkan berbagai gerakan untuk menguatkan otot-otot wajah, meningkatkan sirkulasi darah, dan mengurangi kerutan. 
-Dengan melakukan yoga wajah secara teratur, Anda dapat membantu meningkatkan elastisitas kulit dan memberikan tampilan yang lebih muda dan segar.
-
-Manfaat Yoga Wajah:
-1. Mengurangi Kerutan: Membantu mengencangkan kulit dan mengurangi kerutan halus.
-2. Meningkatkan Sirkulasi: Gerakan yoga meningkatkan aliran darah ke wajah.
-3. Relaksasi: Membantu meredakan stres dan ketegangan di wajah.
-4. Meningkatkan Kesehatan Kulit: Membantu kulit terlihat lebih bercahaya dan sehat.
-''',
-                  ),
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 16),
-          ArticleItem(
-            title: '5 Teknik Yoga Wajah yang Harus Anda Coba',
-            description: 'Pelajari teknik-teknik yoga wajah yang efektif untuk mengurangi tanda-tanda penuaan.',
-            imagePath: 'images/yogaa2.jpg',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ArticleDetailPage(
-                    title: '5 Teknik Yoga Wajah yang Harus Anda Coba',
-                    content: '''
-Berikut adalah lima teknik yoga wajah yang dapat Anda praktikkan di rumah untuk mendapatkan wajah yang lebih muda dan segar:
-
-1. Pijatan Dahi: Gunakan jari telunjuk dan jari tengah untuk memijat dahi dengan gerakan melingkar.
-2. Gerakan Bibir: Cobalah untuk menggerakkan bibir Anda ke atas dan ke bawah secara bergantian.
-3. Pijatan Pipi: Gunakan telapak tangan untuk memijat pipi dari sudut luar ke arah hidung.
-4. Latihan Leher: Putar leher Anda perlahan untuk merelaksasi otot-otot di sekitar rahang.
-5. Pijatan Mata: Gunakan jari manis untuk memijat area di sekitar mata dengan lembut.
-''',
-                  ),
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 16),
-          ArticleItem(
-            title: 'Panduan Lengkap Perawatan Kulit dengan Yoga Wajah',
-            description: 'Ikuti panduan lengkap untuk merawat kulit wajah Anda dengan yoga.',
-            imagePath: 'images/yogaa3.jpg',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ArticleDetailPage(
-                    title: 'Panduan Lengkap Perawatan Kulit dengan Yoga Wajah',
-                    content: '''
-Perawatan kulit tidak hanya bergantung pada produk, tetapi juga pada teknik yang Anda gunakan. Yoga wajah dapat menjadi bagian penting dari rutinitas perawatan kulit Anda. Berikut adalah langkah-langkah untuk memulai:
-
-1. Persiapkan Wajah: Bersihkan wajah Anda dari makeup dan kotoran.
-2. Pilih Teknik: Tentukan teknik yoga wajah yang ingin Anda lakukan sesuai kebutuhan kulit Anda.
-3. Lakukan Secara Teratur: Cobalah untuk melakukan yoga wajah setiap hari selama 10-15 menit.
-4. Kombinasikan dengan Produk: Gunakan serum atau minyak wajah saat melakukan pijatan untuk hasil yang lebih baik.
-
-Dengan mengikuti panduan ini, Anda dapat memaksimalkan manfaat yoga wajah dan mendapatkan kulit yang lebih sehat dan bercahaya.
-''',
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      backgroundColor: const Color.fromARGB(255, 225, 190, 231),
+      body: articles.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: articles.length,
+              itemBuilder: (context, index) {
+                final article = articles[index];
+                return ArticleItem(
+                  title: article.title,
+                  description: article.description,
+                  imagePath: article.imagePath,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ArticleDetailPage(articleId: article.id),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color.fromARGB(255, 143, 78, 155),
         selectedItemColor: Colors.white,
@@ -143,8 +123,6 @@ Dengan mengikuti panduan ini, Anda dapat memaksimalkan manfaat yoga wajah dan me
   }
 }
 
-
-
 class ArticleItem extends StatelessWidget {
   final String title;
   final String description;
@@ -163,6 +141,7 @@ class ArticleItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: EdgeInsets.only(bottom: 16.0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -177,7 +156,6 @@ class ArticleItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Gambar artikel
             Container(
               height: 150,
               decoration: BoxDecoration(
@@ -196,6 +174,7 @@ class ArticleItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color:Color.fromARGB(255, 143, 78, 155)
                 ),
                 textAlign: TextAlign.justify,
               ),
@@ -219,47 +198,109 @@ class ArticleItem extends StatelessWidget {
   }
 }
 
-class ArticleDetailPage extends StatelessWidget {
-  final String title;
-  final String content;
+class ArticleDetailPage extends StatefulWidget {
+  final String articleId;
 
-  ArticleDetailPage({required this.title, required this.content});
+  ArticleDetailPage({required this.articleId});
+
+  @override
+  _ArticleDetailPageState createState() => _ArticleDetailPageState();
+}
+
+class _ArticleDetailPageState extends State<ArticleDetailPage> {
+  Article? article;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchArticleDetail();
+  }
+
+  // Fungsi untuk mengambil detail artikel dari Firestore
+  Future<void> fetchArticleDetail() async {
+    try {
+      final DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('articles')
+          .doc(widget.articleId)
+          .get();
+
+      if (doc.exists) {
+        setState(() {
+          article = Article.fromJson(doc.data() as Map<String, dynamic>);
+          isLoading = false;
+        });
+      } else {
+        throw Exception("Article not found");
+      }
+    } catch (e) {
+      print("Error fetching article detail: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error loading article details: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title, style: TextStyle(color: Colors.white),),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(article?.title ?? "Loading...",
+            style: TextStyle(color: Colors.white)),
         backgroundColor: Color.fromARGB(255, 143, 78, 155),
       ),
       backgroundColor: const Color.fromARGB(255, 225, 190, 231),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      article!.title,
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.justify,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      article!.content,
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
                 ),
-                textAlign: TextAlign.justify,
               ),
-              SizedBox(height: 10),
-              Text(
-                content,
-                style: TextStyle(
-                  fontSize: 16,
-                  height: 1.5,
-                ),
-                 textAlign: TextAlign.justify,
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+    );
+  }
+}
+
+class Article {
+  final String id;
+  final String title;
+  final String description;
+  final String imagePath;
+  final String content;
+
+  Article({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.imagePath,
+    this.content = "",
+  });
+
+  factory Article.fromJson(Map<String, dynamic> json) {
+    return Article(
+      id: json['id'] ?? "",
+      title: json['title'],
+      description: json['description'],
+      imagePath: json['imagePath'],
+      content: json['content'] ?? "",
     );
   }
 }

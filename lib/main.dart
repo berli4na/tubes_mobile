@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ui/articles_page.dart';
 import 'package:ui/detail_program_1.dart';
 import 'package:ui/detail_program_2.dart';
 import 'package:ui/detail_program_3.dart';
@@ -19,7 +20,6 @@ import 'package:ui/sign_up.dart';
 import 'package:ui/edit_profile.dart';
 import 'package:ui/splash_screen.dart';
 import 'package:ui/get_started.dart';
-import 'package:ui/waktu.dart';
 import 'firebase_options.dart';
 
 
@@ -59,7 +59,6 @@ class MyApp extends StatelessWidget {
         '/profile_page': (context) => ProfilePage(),
         '/edit_profile': (context) => EditProfilPage(),
 
-        '/waktu': (context) => YogaFaceScreen(),
 
         //program eksternal
         '/detail_program_1' : (context) => DetailProgram1(),
@@ -75,6 +74,9 @@ class MyApp extends StatelessWidget {
 
         //program selesai
         '/program_selesai': (context) => ProgramBerakhirScreen(),
+
+        //artikel
+        'artikel_liftzy' : (context) => ArticlesPage()
       },
     );
   }

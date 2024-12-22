@@ -1,6 +1,65 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class DetailProgram3 extends StatelessWidget {
+class DetailProgram3 extends StatefulWidget {
+  @override
+  _DetailProgram3State createState() => _DetailProgram3State();
+}
+
+class _DetailProgram3State extends State<DetailProgram3> {
+  Timer? _timer;
+  int _currentStep = 0; // Langkah saat ini (index langkah)
+  int _countdownTime = 0; // Waktu hitung mundur untuk langkah saat ini
+
+  final List<Map<String, dynamic>> _steps = [
+    {'stepText': "Gunakan sedikit minyak wajah atau pelembap untuk memudahkan gerakan pijatan.", 'duration': 20},
+    {'stepText': "Tempatkan ujung jari telunjuk dan tengah di kedua sisi hidung, tepat di atas garis lipatan nasolabial.", 'duration': 30},
+    {'stepText': "Lakukan gerakan memutar kecil ke arah luar (ke pipi) selama 30 detik – 1 menit.", 'duration': 60},
+    {'stepText': "Gunakan ibu jari dan telunjuk untuk mencubit lembut sepanjang garis lipatan nasolabial dari atas ke bawah.", 'duration': 60},
+    {'stepText': "Lakukan cubitan ringan ini selama 1 menit.", 'duration': 60},
+    {'stepText': "Akhiri dengan menekan kedua sisi garis lipatan dengan jari telunjuk selama 10 detik.", 'duration': 10},
+  ];
+
+  void _startCountdown() {
+    if (_timer != null) {
+      _timer!.cancel(); // Menghentikan timer sebelumnya jika ada
+    }
+    if (_currentStep < _steps.length) {
+      setState(() {
+        _countdownTime = _steps[_currentStep]['duration']; // Ambil durasi langkah saat ini
+      });
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        setState(() {
+          if (_countdownTime > 0) {
+            _countdownTime--;
+          } else {
+            timer.cancel();
+            _moveToNextStep(); // Pindah ke langkah berikutnya
+          }
+        });
+      });
+    }
+  }
+
+  void _moveToNextStep() {
+    if (_currentStep < _steps.length - 1) {
+      setState(() {
+        _currentStep++;
+      });
+      _startCountdown(); // Mulai hitung mundur untuk langkah berikutnya
+    } else {
+      // Semua langkah selesai, kembali ke /program_selesai
+      Navigator.pushNamed(context, '/program_selesai');
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Membersihkan timer saat widget dihancurkan
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,22 +76,101 @@ class DetailProgram3 extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Container untuk judul
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'Yoga Wajah: Menghilangkan Lipatan Hidung',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 143, 78, 155),
-              ),
-              textAlign: TextAlign.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Yoga Wajah: Menghilangkan Lipatan Hidung',
+                 style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 143, 78, 155),
+                    ),
+                    textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _startCountdown,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 143, 78, 155),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        minimumSize: Size(120, 40),
+                      ),
+                      child: Text(
+                        "Start",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PlayVideoTutorial()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 143, 78, 155),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        minimumSize: Size(120, 40),
+                      ),
+                      child: Text(
+                        "Video Tutorial",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                Center(
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      color: Colors.purple[200],
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 4.0,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        _countdownTime > 0 ? _countdownTime.toString() : "",
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(top: 16.0), // Margin atas untuk jarak dengan judul
+              margin: EdgeInsets.only(top: 16.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -41,63 +179,23 @@ class DetailProgram3 extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1), // Warna bayangan dengan transparansi
-                    offset: Offset(0, 2), // Posisi bayangan
-                    blurRadius: 4.0, // Radius blur bayangan
+                    color: Colors.black.withOpacity(0.1),
+                    offset: Offset(0, 2),
+                    blurRadius: 4.0,
                   ),
                 ],
               ),
-              child: ListView(
+              child: ListView.builder(
                 padding: const EdgeInsets.all(16.0),
-                children: [
-                  ExerciseStep(
-                    stepNumber: 1,
-                    stepText: "Gunakan sedikit minyak wajah atau pelembap untuk memudahkan gerakan pijatan.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 2,
-                    stepText: "Tempatkan ujung jari telunjuk dan tengah di kedua sisi hidung, tepat di atas garis lipatan nasolabial.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 3,
-                    stepText: "Lakukan gerakan memutar kecil ke arah luar (ke pipi) selama 30 detik – 1 menit.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 4,
-                    stepText: "Setelah itu, gunakan ibu jari dan telunjuk untuk mencubit lembut sepanjang garis lipatan nasolabial dari atas ke bawah.",
-                  ),
-                  ExerciseStep(
-                    stepNumber: 5,
-                    stepText: "Lakukan cubitan ringan ini selama 1 menit.",
-                  ),
-                   ExerciseStep(
-                    stepNumber: 6,
-                    stepText: "Akhiri dengan menekan kedua sisi garis lipatan dengan jari telunjuk selama 10 detik.",
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/program_selesai');
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:  Color.fromARGB(255, 143, 78, 155), // Mengubah warna latar belakang menjadi putih
-                side: BorderSide(color:Color.fromARGB(255, 143, 78, 155), width: 1), // Menambahkan border
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                minimumSize: Size(double.infinity, 50), // Memastikan tombol selebar layar
-              ),
-              child: Text(
-                "Selesai",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.white, // Mengubah warna teks agar kontras
-                ),
+                itemCount: _steps.length,
+                itemBuilder: (context, index) {
+                  return ExerciseStep(
+                    stepNumber: index + 1,
+                    stepText: _steps[index]['stepText'],
+                    durationText: "${_steps[index]['duration']} detik",
+                    isActive: _currentStep == index,
+                  );
+                },
               ),
             ),
           ),
@@ -107,11 +205,77 @@ class DetailProgram3 extends StatelessWidget {
   }
 }
 
+class PlayVideoTutorial extends StatefulWidget {
+  const PlayVideoTutorial({super.key});
+
+  @override
+  State<PlayVideoTutorial> createState() => _PlayVideoTutorialState();
+}
+
+class _PlayVideoTutorialState extends State<PlayVideoTutorial> {
+  final videoURL = "https://www.youtube.com/watch?v=5_RhOGj1svM";
+
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    final videoID = YoutubePlayer.convertUrlToId(videoURL);
+
+    _controller = YoutubePlayerController(
+        initialVideoId: videoID!,
+        flags: const YoutubePlayerFlags(autoPlay: false));
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          "Video Tutorial",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color.fromARGB(255, 143, 78, 155),
+      ),
+      backgroundColor: Colors.purple[100],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          YoutubePlayer(controller: _controller,
+          showVideoProgressIndicator: true,
+          onReady: () => debugPrint('Siap'),
+          bottomActions: [
+            CurrentPosition(),
+            ProgressBar(
+              isExpanded: true,
+              colors: const ProgressBarColors(
+                playedColor: Colors.purple,
+                handleColor: Color.fromARGB(255, 209, 53, 236)
+              ),
+            ),
+          ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
 class ExerciseStep extends StatelessWidget {
   final int stepNumber;
   final String stepText;
+  final String durationText;
+  final bool isActive;
 
-  ExerciseStep({required this.stepNumber, required this.stepText});
+  ExerciseStep({
+    required this.stepNumber,
+    required this.stepText,
+    required this.durationText,
+    this.isActive = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +283,7 @@ class ExerciseStep extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8.0),
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isActive ? Colors.purple[100] : Colors.white,
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(
           color: Color.fromARGB(255, 143, 78, 155),
@@ -139,12 +303,26 @@ class ExerciseStep extends StatelessWidget {
           ),
           SizedBox(width: 16.0),
           Expanded(
-            child: Text(
-              stepText,
-              style: TextStyle(
-                fontSize: 14.0,
-              ),
-              textAlign: TextAlign.justify,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  stepText,
+                  style: TextStyle(fontSize: 14.0),
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: 8.0),
+                Row(
+                  children: [
+                    Icon(Icons.timer, size: 16.0, color: Colors.grey),
+                    SizedBox(width: 4.0),
+                    Text(
+                      durationText,
+                      style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
